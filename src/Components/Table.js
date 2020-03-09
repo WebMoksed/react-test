@@ -42,16 +42,17 @@ export default class componentName extends React.Component {
           <td>{data.endDate}</td>
           <td>
             <td
+              className="active-td"
               style={{
                 background: Moment(data.startDate).isBetween(
                   Data[0].startDate,
                   Data[Data.length - 1].startDate
                 )
-                  ? "red"
-                  : "blue"
+                  ? "green"
+                  : "red"
               }}
             ></td>
-            <td>
+            <td style={{ border: 0 }}>
               {Moment(data.startDate).isBetween(
                 Data[0].startDate,
                 Data[Data.length - 1].startDate
