@@ -40,7 +40,6 @@
 }
 .active-td {
   border-radius: 50px;
-  display: inline-block;
   float: left;
   margin-top: 9px;
 }
