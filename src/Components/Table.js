@@ -31,12 +31,40 @@ export default class componentName extends React.Component {
         Data: MainData
       });
     }
-
-    console.log("term", term);
   };
   render() {
     const { Data } = this.state;
-    console.log("term", Data);
+    const viewr = data => {
+      return (
+        <tr>
+          <td>{data.name}</td>
+          <td>{data.startDate}</td>
+          <td>{data.endDate}</td>
+          <td>
+            <td
+              style={{
+                background: Moment(data.startDate).isBetween(
+                  Data[0].startDate,
+                  Data[Data.length - 1].startDate
+                )
+                  ? "red"
+                  : "blue"
+              }}
+            ></td>
+            <td>
+              {Moment(data.startDate).isBetween(
+                Data[0].startDate,
+                Data[Data.length - 1].startDate
+              )
+                ? "Active"
+                : "In Active"}{" "}
+            </td>
+          </td>
+
+          <td>{(data.Budget % 1000) + "K"}</td>
+        </tr>
+      );
+    };
 
     return (
       <div className="campaign-table">
@@ -47,7 +75,6 @@ export default class componentName extends React.Component {
               <input type="text" placeholder="End Date" />
             </div>
             <div className="search-right">
-              {/* <input type="text" placeholder="Search" /> */}
               <SearchInput
                 className="search-input"
                 onChange={this.searchUpdated}
@@ -65,23 +92,11 @@ export default class componentName extends React.Component {
               </tr>
               {Data &&
                 Data.length > 0 &&
-                Data.map((data, key) => (
-                  <tr>
-                    <td>{data.name}</td>
-                    <td>{data.startDate}</td>
-                    <td>{data.endDate}</td>
-                    {/* <td>{data.dataEnd}</td> */}
-                    <td>
-                      {Moment(data.startDate).isBetween(
-                        Data[0].startDate,
-                        Data[Data.length - 1].startDate
-                      )
-                        ? "Active"
-                        : "In Active"}{" "}
-                    </td>
-                    <td>{(data.Budget % 1000) + "K"}</td>
-                  </tr>
-                ))}
+                Data.map((data, key) => {
+                  return new Date(data.startDate) <= new Date(data.endDate)
+                    ? viewr(data)
+                    : null;
+                })}
             </thead>
           </table>
         </div>
